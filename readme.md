@@ -1,58 +1,125 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+## Como Execultar a API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+#### 1º
+Depois de clonar o repositório crie uma cópia do arquivo `.env.example`, com o nome `.env`
 
-## About Laravel
+```sh
+cp .env.example .env
+```
+#### 2º
+Crie e um banco de dados e faça as configurações do `.env` apontar para ele;
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+#### 3º
+Instale as dependências do projeto rodando:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```sh
+composer install
+```
+#### 4º
+Rode as migrações do sistema e seus `seeders`
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+```sh
+php artisan migrate --seed
+```
+#### 5º
+Rode o servidor da na sua aplicação
+```sh
+php artisan serve
+```
+Por padrão será aberto o servidor da sua aplicação em: `http://127.0.0.1:8000/`
 
-## Learning Laravel
+## Lista de Rotas da API
+No arquivo `routes/api.php`, estão disponives as seguintes rotas:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+```php
+/******************* 
+*  Rotas de aluno  *
+********************/
+/**
+* Rota disponivel em: exemplo em: http://127.0.0.1:8000/api/aluno
+* Método: GET
+* Descrição: Lista todos os alunos do banco
+*/
+Route::get('aluno','AlunoController@index');
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+/**
+* Rota disponivel em: exemplo em: http://127.0.0.1:8000/api/aluno/1/edit
+* Método: GET
+* Descrição: Lista um aluno encontrado pelo seu id
+*/
+Route::get('aluno/{id}/edit','AlunoController@edit');
 
-## Laravel Sponsors
+/**
+* Rota disponivel em: exemplo em: http://127.0.0.1:8000/api/aluno
+* Método: POST
+* Descrição: Recebe dados de um aluno para salvar no banco
+*/
+Route::post('aluno','AlunoController@store');
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
+/**
+* Rota disponivel em: exemplo em: http://127.0.0.1:8000/api/aluno/1
+* Método: PUT
+* Descrição: Atualiza o dado de um aluno cujo id for passado
+*/
+Route::put('aluno/{id}','AlunoController@update');
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
+/**
+* Rota disponivel em: exemplo em: http://127.0.0.1:8000/api/aluno/1
+* Método: DELETE
+* Descrição: Exclui um aluno do bando cujo o id for passado
+*/
+Route::delete('aluno/{id}','AlunoController@destroy');
 
-## Contributing
+/**
+* Rota disponivel em: exemplo em: http://127.0.0.1:8000/api/buscar_aluno?busca=maria
+* Método: GET
+* Descrição: Busca alunos no banco com nome similar ao valor do parâmetro busca
+*/
+Route::get('buscar_aluno', 'AlunoController@buscar');
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
 
-## Security Vulnerabilities
+/***********************
+*  Rotas de professor  *
+************************/
+/**
+* Rota disponivel em: exemplo em: http://127.0.0.1:8000/api/professor
+* Método: GET
+* Descrição: Lista todos os professores do banco
+*/
+Route::get('professor','ProfessorController@index');
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+/**
+* Rota disponivel em: exemplo em: http://127.0.0.1:8000/api/professor/1/edit
+* Método: GET
+* Descrição: Lista um professor encontrado pelo seu id
+*/
+Route::get('professor/{id}/edit','ProfessorController@edit');
 
-## License
+/**
+* Rota disponivel em: exemplo em: http://127.0.0.1:8000/api/professor
+* Método: POST
+* Descrição: Recebe dados de um professor para salvar no banco
+*/
+Route::post('professor','ProfessorController@store');
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+/**
+* Rota disponivel em: exemplo em: http://127.0.0.1:8000/api/professor/1
+* Método: PUT
+* Descrição: Atualiza o dado de um professor cujo id for passado
+*/
+Route::put('professor/{id}','ProfessorController@update');
+
+/**
+* Rota disponivel em: exemplo em: http://127.0.0.1:8000/api/professor/1
+* Método: DELETE
+* Descrição: Exclui um professor do bando cujo o id for passado
+*/
+Route::delete('professor/{id}','ProfessorController@destroy');
+
+/**
+* Rota disponivel em: exemplo em: http://127.0.0.1:8000/api/buscar_professor?busca=paulo
+* Método: GET
+* Descrição: Busca professor no banco com nome similar ao valor do parâmetro busca
+*/
+Route::get('buscar_professor', 'ProfessorController@buscar');
+```
