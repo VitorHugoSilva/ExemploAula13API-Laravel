@@ -16,12 +16,17 @@ Instale as dependências do projeto rodando:
 composer install
 ```
 #### 4º
+Gere a chave da aplicação
+```sh
+php artisan key:generate
+```
+#### 5º
 Rode as migrações do sistema e seus `seeders`
 
 ```sh
 php artisan migrate --seed
 ```
-#### 5º
+#### 6º
 Rode o servidor da na sua aplicação
 ```sh
 php artisan serve
